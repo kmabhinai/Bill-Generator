@@ -1,3 +1,42 @@
+<?php
+  // error_reporting(0);
+  session_start();
+  include("dbconnection.php");
+  // include("checklogin.php");
+  // check_login();
+
+  if(isset($_POST['submit']))
+  {
+    $name = $_POST['name'];
+    $mobile = $_POST['mobile'];
+    $services = $_POST['all_work'];
+    $profit = $_POST['profit'];
+    $all_bill = $_POST['all_bill'];
+    $all_challana = $_POST['all_challana'];
+    $cash = $_POST['cash'];
+    $upi = $_POST['upi'];
+    $gross_amt = $_POST['gross_amt_php'];
+    $remaining_amt = $_POST['remaining_php'];
+    $due_amt = $_POST['due_php'];
+    $status = $_POST['payment_status'];
+    date_default_timezone_set("Asia/Calcutta");
+    $order_date=date('Y/m/d H:i:sa');
+
+    $a=mysqli_query($con,"insert into bill_generator
+    (name,mobile,services,profit,all_bill,all_challana,cash,upi,gross_amt,remaining_amt,due_amt,order_date,status)  
+    values 
+    ('$name','$mobile','$services','$profit','$all_bill','$all_challana','$cash','$upi','$gross_amt','$remaining_amt','$due_amt','$order_date','$status')");
+
+
+    if($a)
+    {
+    echo "<script>alert('Inserted Successfully ');</script>";
+    }
+    else
+      echo "<script>alert('Not Inserted Successfully');</script>";
+
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,7 +69,7 @@
                 </h6>
               </div>
               <div class="card-body">
-                <form>
+                <form method="post">
                   <div class="form-row">
                     <div class="col-md-9 col-xl-9">
                       <div class="box-bg">
@@ -95,6 +134,7 @@
                                       class="form-control form-control-sm font-sm"
                                       type="text"
                                       name="work"
+                                      onchange="allWork()"
                                     />
                                   </div>
                                 </td>
@@ -117,7 +157,7 @@
                                       type="number"
                                       min="1"
                                       name="challana"
-                                      onchange="totalForEach(this);grossAmt();billDetails()"
+                                      onchange="totalForEach(this);grossAmt();billDetails();allBill();allChallana();totalProfit()"
                                     />
                                   </div>
                                 </td>
@@ -128,7 +168,7 @@
                                       type="number"
                                       min="1"
                                       name="bill"
-                                      onchange="totalForEach(this);grossAmt();billDetails()"
+                                      onchange="totalForEach(this);grossAmt();billDetails();allBill();allChallana();totalProfit()"
                                     />
                                   </div>
                                 </td>
@@ -166,10 +206,13 @@
                           </table>
                         </div>
                       </div>
-                      <input type="number" name="profit" value="0" hidden />
-                      <input type="text" name="all_work" hidden />
-                      <input type="text" name="all_bill" hidden />
-                      <input type="text" name="all_challana" hidden />
+                      <input type="number" id="profit" name="profit" value="0" hidden/>
+                      <input type="text" id="all_work" name="all_work" hidden/>
+                      <input type="text" id="all_bill" name="all_bill" hidden/>
+                      <input type="text" id="all_challana" name="all_challana" hidden/>
+                      <input type="text" id="gross_amt_php" name="gross_amt_php" hidden />
+                      <input type="text" id="due_php" name="due_php" hidden />
+                      <input type="text" id="remaining_php" name="remaining_php" hidden />
                     </div>
                     <div class="col-md-3 col-xl-3">
                       <div class="box-bg">
@@ -206,7 +249,7 @@
                               <input
                                 class="form-control font-sm"
                                 type="number"
-                                name="phno"
+                                name="mobile"
                               />
                             </div>
                           </div>
@@ -225,7 +268,7 @@
                                 class="form-control font-sm"
                                 type="number"
                                 disabled=""
-                                name="total_amt"
+                                name="gross_amt"
                               />
                             </div>
                           </div>
@@ -327,13 +370,12 @@
                             </div>
                           </div>
                           <div class="col-xl offset-xl-0 text-right">
-                            <a
-                              class="btn btn-info btn-block btn-sm mt-3 mb-1 btn-smd"
+                            <input type="submit"
+                              class="btn-info btn-block btn-sm mt-3 mb-1 btn-smd"
                               role="button"
                               id="inv_btn-1"
-                              ><i class="fa fa-save"></i
-                              ><strong>&nbsp; Submit</strong><br
-                            /></a>
+                              name='submit'
+                              ></input>
                           </div>
                         </div>
                       </div>
