@@ -185,11 +185,9 @@ let allChallana = () => {
 
 let totalProfit = () => {
   let allBills = document.getElementById("all_bill").value.split(",");
-  let allChallanas = document.getElementById("all_challana").value.split(",");
-  let totalBill = 0, totalChallana = 0;
+  let totalBill = 0;
   for (let i = 0; i < allBills.length; i++) {
     totalBill += allBills[i] * 1;
-    totalChallana += allChallanas[i] * 1;
   }
-  document.getElementById("profit").value = (totalBill - totalChallana);
+  document.getElementById("profit").value = totalBill;
 };
