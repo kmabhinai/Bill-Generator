@@ -13,6 +13,7 @@
     $profit = $_POST['profit'];
     $all_bill = $_POST['all_bill'];
     $all_challana = $_POST['all_challana'];
+    $all_quantity = $_POST['all_quantity'];
     $cash = $_POST['cash'];
     $upi = $_POST['upi'];
     $gross_amt = $_POST['gross_amt_php'];
@@ -23,14 +24,15 @@
     $order_date=date('Y/m/d H:i:sa');
 
     $a=mysqli_query($con,"insert into bill_generator
-    (name,mobile,services,profit,all_bill,all_challana,cash,upi,gross_amt,remaining_amt,due_amt,order_date,status)  
+    (name,mobile,services,profit,all_bill,all_challana,all_quantity,cash,upi,gross_amt,remaining_amt,due_amt,order_date,status)  
     values 
-    ('$name','$mobile','$services','$profit','$all_bill','$all_challana','$cash','$upi','$gross_amt','$remaining_amt','$due_amt','$order_date','$status')");
+    ('$name','$mobile','$services','$profit','$all_bill','$all_challana','$all_quantity','$cash','$upi','$gross_amt','$remaining_amt','$due_amt','$order_date','$status')");
 
 
     if($a)
     {
     echo "<script>alert('Inserted Successfully ');</script>";
+    echo "<script>window.location.href='https://api.whatsapp.com/send?text=Thank you and Visit https://knls.in/services/ for more Services %20&phone=91".$mobile."'</script>";
     }
     else
       echo "<script>alert('Not Inserted Successfully');</script>";
@@ -65,6 +67,7 @@
                   class="text-white m-0 font-md"
                   style="text-align: center; font-weight: bold"
                 >
+                <b1>KNLS Computers </b1><br/><br/>
                   Counter Token<br />
                 </h6>
               </div>
@@ -146,7 +149,7 @@
                                       min="1"
                                       name="quantity"
                                       value="1"
-                                      onchange="totalForEach(this);grossAmt();billDetails()"
+                                      onchange="totalForEach(this);grossAmt();billDetails();allQuantity();"
                                     />
                                   </div>
                                 </td>
@@ -157,7 +160,7 @@
                                       type="number"
                                       min="1"
                                       name="challana"
-                                      onchange="totalForEach(this);grossAmt();billDetails();allBill();allChallana();totalProfit()"
+                                      onchange="totalForEach(this);grossAmt();billDetails();allBill();allChallana();allQuantity();totalProfit()"
                                     />
                                   </div>
                                 </td>
@@ -168,7 +171,7 @@
                                       type="number"
                                       min="1"
                                       name="bill"
-                                      onchange="totalForEach(this);grossAmt();billDetails();allBill();allChallana();totalProfit()"
+                                      onchange="totalForEach(this);grossAmt();billDetails();allBill();allChallana();allQuantity();totalProfit()"
                                     />
                                   </div>
                                 </td>
@@ -209,6 +212,7 @@
                       <input type="number" id="profit" name="profit" value="0" hidden/>
                       <input type="text" id="all_work" name="all_work" hidden/>
                       <input type="text" id="all_bill" name="all_bill" hidden/>
+                      <input type="text" id="all_quantity" name="all_quantity" hidden/>
                       <input type="text" id="all_challana" name="all_challana" hidden/>
                       <input type="text" id="gross_amt_php" name="gross_amt_php" hidden />
                       <input type="text" id="due_php" name="due_php" hidden />

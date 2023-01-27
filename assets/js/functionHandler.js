@@ -11,17 +11,17 @@ let append_row = (div_data) => {
     </td>
     <td class="w-10x">
       <div class="form-group mb-1">
-        <input class="form-control form-control-sm font-sm" type="number" min="1" value="1" name="quantity" onchange="totalForEach(this);grossAmt();billDetails();"/>
+        <input class="form-control form-control-sm font-sm" type="number" min="1" value="1" name="quantity" onchange="totalForEach(this);grossAmt();billDetails();allQuantity();"/>
       </div>
     </td>
     <td class="w-10x">
       <div class="form-group mb-1">
-        <input class="form-control form-control-sm font-sm" type="number" min="1" name="challana" onchange="totalForEach(this);grossAmt();billDetails();allWork();allBill();allChallana();totalProfit()"/>
+        <input class="form-control form-control-sm font-sm" type="number" min="1" name="challana" onchange="totalForEach(this);grossAmt();billDetails();allWork();allBill();allChallana();allQuantity();totalProfit()"/>
       </div>
     </td>
     <td class="w-10x">
       <div class="form-group mb-1">
-        <input class="form-control form-control-sm font-sm" type="number" min="1" name="bill" onchange="totalForEach(this);grossAmt();billDetails();allWork();allBill();allChallana();totalProfit()"/>
+        <input class="form-control form-control-sm font-sm" type="number" min="1" name="bill" onchange="totalForEach(this);grossAmt();billDetails();allWork();allBill();allChallana();allQuantity();totalProfit()"/>
       </div>
     </td>
     <td class="w-10x">
@@ -183,11 +183,25 @@ let allChallana = () => {
   allChallanaField.value = str.join(",");
 };
 
+let allQuantity = () => {
+  let allQuantityStr = Array.from(document.getElementsByName("quantity"));
+  // console.log(allQuantityStr);
+  let str = [];
+  for (let i = 0; i < allQuantityStr.length; i++) {
+    if (!allQuantityStr[i].parentNode.parentNode.parentNode.children[5].children[0].children[0].value) continue;
+    str.push(allQuantityStr[i].value);
+  }
+  console.log(str);
+  let allChallanaField = document.getElementById("all_quantity");
+  allChallanaField.value = str.join(",");
+};
+
 let totalProfit = () => {
   let allBills = document.getElementById("all_bill").value.split(",");
+  let allQuantitys = document.getElementById("all_quantity").value.split(",");
   let totalBill = 0;
   for (let i = 0; i < allBills.length; i++) {
-    totalBill += allBills[i] * 1;
+    totalBill += (allQuantitys[i] * 1) * (allBills[i] * 1);
   }
   document.getElementById("profit").value = totalBill;
 };
